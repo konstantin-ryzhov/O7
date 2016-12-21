@@ -328,9 +328,33 @@ O7.prototype.ping = function() {
  * @param message Client message
  */
 O7.prototype.parseMessage = function(sock, data) {
-  var self = this,
-      obj  = JSON.parse(data),
-      msg  = obj.message;
+  var self = this;
+  var obj;
+  var message = data;
+
+  try {
+    obj = JSON.parse(message);
+    saveObject("O7-temp-ws-buffer", '');
+  } catch (e) {
+    this.error("Parsing: " + message);
+  }
+
+  if (!obj) {
+    var prev_message_part = loadObject("O7-temp-ws-buffer") || '';
+
+    message = prev_message_part + message
+
+    try {
+      obj = JSON.parse(message);
+      saveObject("O7-temp-ws-buffer", '');
+    } catch (e) {
+      saveObject("O7-temp-ws-buffer", message);
+      this.error("Parsing with buffer: " + message);
+      return;
+    }
+  }
+
+  var msg  = obj.message;
 
   if (obj.type === "ping") {
     this.ping();
@@ -339,7 +363,7 @@ O7.prototype.parseMessage = function(sock, data) {
 
   if (typeof msg !== "object") return;
 
-  this.debug("Parsing: " + data);
+  this.debug("Parsing: " + message);
 
   switch (msg.action) {
     case "getUidRequest":
