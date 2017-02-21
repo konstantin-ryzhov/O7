@@ -51,13 +51,13 @@ function O7() {
     return;
   }
 
-  this.O7_UUID = this.formatUUID(this.zway.controller.data.uuid.value);
+  this.O7_UUID = '98b6d6b7-83d7-4e4e-9019-80a50b1ce9e5'; //this.formatUUID(this.zway.controller.data.uuid.value);
   this.O7_MAC = this.readMAC();
   this.O7_OS_VER = this.readOSVersion();
-  this.O7_PROTOCOL = "ws";
-  this.O7_HOST     = "smart.local";
-  this.O7_PORT     = 4080;
-  this.O7_TOKEN = this.getToken();
+  this.O7_PROTOCOL = "ws";                // ws wws
+  this.O7_HOST     = "smart.local"; // smart.local lk.smarthome.rt.ru
+  this.O7_PORT     = 4080;                 // 4080 4443;
+  this.O7_TOKEN = 'xzkfACdFOlj0xLdyFG50tA'; //this.getToken();
   this.O7_SSL_CA = null;
   this.O7_SSL_CERT = null;
   this.O7_SSL_KEY = null;
