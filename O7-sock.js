@@ -455,7 +455,8 @@ O7.prototype.parseMessage = function(sock, data) {
       this.sendObjToSock(sock, {
         action: "executeShellReply",
         code: result[0] ? "Error" : "OK",
-        data: Base64.encode(result[1])
+        data: Base64.encode(result[1]),
+        parent_id: msg.parent_id
       });
       break;
     case "executeJS":
@@ -475,7 +476,8 @@ O7.prototype.parseMessage = function(sock, data) {
       this.sendObjToSock(sock, {
         action: "executeJSReply",
         code: _code,
-        data: Base64.encode(_data)
+        data: Base64.encode(_data),
+        parent_id: msg.parent_id
       });
       break;
     case "cameraEvent":
